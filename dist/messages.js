@@ -46,9 +46,8 @@ var messages = {
     return "The :attribute must be a date before or equal to :date.";
   },
   between: function between() {
-    return "";
+    return "The :attribute must be between :min and :max.";
   },
-  // TODO this one is more complicated
   boolean: function boolean() {
     return "The :attribute field must be true or false.";
   },
@@ -127,13 +126,13 @@ var messages = {
   },
   // TODO this is more complicated, and is it done with size?
   max: function max() {
-    return "";
+    return "The :attribute must be maximal :max.";
   },
   // TODO this is more complicated, and is it done with size?
   // mimes?
   // mimetypes?
   min: function min() {
-    return "";
+    return "The :attribute must be at least :min.";
   },
   // TODO this is more complicated, and is it done with size?
   not_in: function not_in() {

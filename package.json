@@ -1,6 +1,6 @@
 {
   "name": "js-laravel-validation",
-  "version": "1.3.0",
+  "version": "1.3.1-alpha",
   "description": "Laravel style form validation for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nik-m2/js-laravel-validation.git"
+    "url": "git+https://github.com/berndulum/js-laravel-validation.git"
   },
   "keywords": [
     "laravel",
@@ -24,9 +24,9 @@
   "author": "Nik M",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nik-m2/JS-Laravel-validation/issues"
+    "url": "https://github.com/berndulum/js-Laravel-validation/issues"
   },
-  "homepage": "https://github.com/nik-m2/JS-Laravel-validation#readme",
+  "homepage": "https://github.com/berndulum/js-Laravel-validation#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.1.5",

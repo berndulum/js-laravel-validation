@@ -68,11 +68,13 @@ function validateForm(_ref) {
 
     if (result.errors) {
       fields.push(key);
-      errors.push(result.errors);
+      errors.push(result.errors.map(function (rule) {
+        return rule.key;
+      }));
 
       if (includeMessages) {
         var fieldMessages = result.errors.map(function (rule) {
-          return (0, _placeholders.generateMessage)(rule, fieldData);
+          return (0, _placeholders.generateMessage)(rule.key, rule.params, fieldData);
         });
         messages.push(fieldMessages);
       }
@@ -125,7 +127,7 @@ function parseRule(rule) {
     key: ruleParts[0],
     params: ruleParts[1] ? ruleParts[1].split(',') : []
   };
-} // {key, value, validation}
+} // Returns array of failed rules or false if all rules passed.
 
 
 function validateField(fieldData, formData) {
@@ -164,6 +166,7 @@ function validateField(fieldData, formData) {
     var params = _objectSpread({}, rule, {
       key: fieldData.key,
       value: fieldData.value,
+      rules: validation,
       values: values
     });
 
@@ -182,7 +185,7 @@ function validateField(fieldData, formData) {
         continue;
       }
 
-      errors.push(rule.key);
+      errors.push(rule);
     }
   }
 

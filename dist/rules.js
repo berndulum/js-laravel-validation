@@ -46,8 +46,9 @@ var _default = {
   },
   alpha_dash: function alpha_dash(_ref5) {
     var value = _ref5.value;
-    return b(typeof value === 'string') && /^[A-Za-z\-]+$/i.test(value);
+    return b(typeof value === 'string') && /^[A-Za-z\-_]+$/i.test(value);
   },
+  // Unicode is still missing!
   alpha_num: function alpha_num(_ref6) {
     var value = _ref6.value;
     return b(typeof value === 'string') && /^[a-z0-9]+$/i.test(value);
@@ -69,6 +70,7 @@ var _default = {
   },
   between: function between(_ref10) {
     var value = _ref10.value,
+        rules = _ref10.rules,
         params = _ref10.params;
     if (typeof value !== 'number' && !value) return false;
 
@@ -76,7 +78,7 @@ var _default = {
         min = _params[0],
         max = _params[1];
 
-    value = sizeOf(value);
+    value = sizeOf(value, rules);
     return value > min && value < max;
   },
   boolean: function boolean(_ref11) {
@@ -182,7 +184,7 @@ var _default = {
   },
   email: function email(_ref20) {
     var value = _ref20.value;
-    return /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
+    return /^\w+([\.+-_]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(value);
   },
   ends_with: function ends_with(_ref21) {
     var value = _ref21.value,
@@ -277,8 +279,9 @@ var _default = {
   },
   max: function max(_ref36) {
     var value = _ref36.value,
-        params = _ref36.params;
-    return (b(value) || typeof value === 'number') && sizeOf(value) <= params[0];
+        params = _ref36.params,
+        rules = _ref36.rules;
+    return (b(value) || typeof value === 'number') && sizeOf(value, rules) <= params[0];
   },
   mimetypes: function mimetypes(_ref37) {
     var value = _ref37.value,
@@ -314,8 +317,9 @@ var _default = {
   },
   min: function min(_ref39) {
     var value = _ref39.value,
-        params = _ref39.params;
-    return (b(value) || typeof value === 'number') && sizeOf(value) >= params[0];
+        params = _ref39.params,
+        rules = _ref39.rules;
+    return (b(value) || typeof value === 'number') && sizeOf(value, rules) >= params[0];
   },
   not_in: function not_in(_ref40) {
     var value = _ref40.value,
@@ -449,13 +453,22 @@ function isNotEmpty(value) {
   return typeof value === 'number' || typeof value === 'boolean' || !!value;
 }
 
-function sizeOf(value) {
-  //TODO files, images other things
+function sizeOf(value, rules) {
+  // If value is a string, but there is a numeric rule we parse the string as number.
+  if (rules !== undefined && typeof value === 'string' && hasNumericRule(rules)) {
+    return Number.parseFloat(value);
+  } //TODO files, images other things
+
+
   if (value.hasOwnProperty('length')) {
     value = value.length;
   }
 
   return value;
+}
+
+function hasNumericRule(rules) {
+  return rules.includes("number") || rules.includes("integer");
 }
 
 function b(value) {
